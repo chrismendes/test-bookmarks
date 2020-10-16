@@ -1,0 +1,17 @@
+{
+  "name": "test-phantom",
+  "version": "1.0.0",
+  "description": "Code test for developer role at Phantom",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "normalize.css": "^8.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0"
+  }
+}
