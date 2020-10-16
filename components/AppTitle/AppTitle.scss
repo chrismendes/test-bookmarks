@@ -1,0 +1,48 @@
+.apptitle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 20px 0;
+}
+
+.apptitle > .apptitle__title {
+    font-size: 1.4em;
+    color: #ffffff;
+
+    padding: 0;
+}
+
+.apptitle > .apptitle__github {
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+.apptitle > .apptitle__github > img {
+    margin-right: 8px;
+}
+
+.apptitle__warning {
+    display: block;
+    padding: 6px 12px;
+    margin-top: -30px;
+    align-self: flex-end;
+
+    text-align: center;
+    font-size: 0.9em;
+    user-select: none;
+
+    background: #003665;
+
+    @media (max-width: 1180px) {
+        width: 100%;
+        align-self: unset;
+        margin-bottom: 20px;
+
+        font-size: 1em;
+
+        background: #bb0303;
+    }
+}
