@@ -6,4 +6,5 @@ import './layouts/Container/LayoutContainer.scss'
 import './layouts/Section/LayoutSection.scss'
 
 import './components/AppTitle/AppTitle.scss'
+import './components/Button/Button.scss'
 import './components/Form/Form.scss'
