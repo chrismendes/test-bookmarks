@@ -21,10 +21,10 @@
     text-decoration: none;
 
     &:hover {
-        background-color: #e6f4ff;
+        background-color: #f0f0f0;
     }
 }
 
 .pagination > li.is-active > a {
-    background: #f0f0f0;
+    background: #e6f4ff;
 }
