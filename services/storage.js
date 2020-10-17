@@ -41,4 +41,13 @@ export default class Storage {
     this.setBookmarks(bookmarks);
   }
 
+  /**
+   * Fetch all bookmarks from storage
+   * 
+   * @returns {array} Array of URL strings, or empty array
+   */
+  fetch() {
+    return this.getBookmarks();
+  }
+
 }
