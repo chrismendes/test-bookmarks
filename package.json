@@ -4,6 +4,7 @@
   "description": "Code test for developer role at Phantom",
   "main": "app.js",
   "scripts": {
+    "start": "parcel index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
