@@ -12,7 +12,8 @@ import './components/Bookmark/Bookmark.scss'
 import './components/Pagination/Pagination.scss'
 
 import Controller from './controllers/controller';
+import Storage from './services/storage';
 
-
-const controller = new Controller(null, null);
-controller.addBookmark('https://chrismendes.uk');
+const storage = new Storage('bookmark-manager');
+const controller = new Controller(null, storage);
+// controller.addBookmark('https://chrismendes.uk');

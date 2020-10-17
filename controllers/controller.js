@@ -19,6 +19,8 @@ export default class Controller {
   addBookmark(url) {
     
     const validURL = validateURL(url);
+    
+    this.storage.insert(url);
 
   }
   
