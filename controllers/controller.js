@@ -9,6 +9,9 @@ export default class Controller {
   constructor(view, storage) {
     this.view = view;
     this.storage = storage;
+
+    const bookmarks = this.storage.fetch();
+    this.view.render({ bookmarks: bookmarks });
   }
 
   /**
@@ -17,11 +20,10 @@ export default class Controller {
    * @param {string} url Web page URL
    */
   addBookmark(url) {
-    
     const validURL = validateURL(url);
-    
-    this.storage.insert(url);
-
+    if(validURL === true) {
+      this.storage.insert(url);
+    }
   }
   
 }

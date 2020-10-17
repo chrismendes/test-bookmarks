@@ -8,12 +8,13 @@ import './layouts/Section/LayoutSection.scss'
 import './components/AppTitle/AppTitle.scss'
 import './components/Button/Button.scss'
 import './components/Form/Form.scss'
-import './components/Bookmark/Bookmark.scss'
 import './components/Pagination/Pagination.scss'
 
 import Controller from './controllers/controller';
 import Storage from './services/storage';
+import IndexPage from './pages/index.js'
 
 const storage = new Storage('bookmark-manager');
-const controller = new Controller(null, storage);
+const indexPage = new IndexPage();
+const controller = new Controller(indexPage, storage);
 // controller.addBookmark('https://chrismendes.uk');
