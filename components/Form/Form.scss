@@ -5,3 +5,10 @@
 h2 ~ .form {
     margin-top: 30px;
 }
+
+.form > .form_error {
+    color: #ff0000;
+
+    margin-top: 16px;
+    display: block;
+}
