@@ -12,3 +12,17 @@ h2 {
     border-bottom: 1px solid #111111;
     padding-bottom: 12px;
 }
+
+
+input[type=text] {
+    height: 46px;
+    padding: 0 16px;
+
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    outline: 0;
+}
+
+input[type=text]:focus {
+    border-color: #0f7ef1;
+}
