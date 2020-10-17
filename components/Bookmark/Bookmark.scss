@@ -1,4 +1,7 @@
 .bookmark {
+    width: 100%;
+    display: block;
+
     padding: 12px;
     
     background: #f7f7f7;
@@ -10,13 +13,4 @@
     &:first-child {
         margin-top: 0;
     }
-}
-
-.bookmark > .bookmark_title,
-.bookmark > .bookmark_url {
-    display: inline-block;
-}
-
-.bookmark > .bookmark_title {
-    width: 30%;
 }
