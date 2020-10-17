@@ -8,12 +8,16 @@ html, body {
 }
 
 
+// Typography
 h2 {
     border-bottom: 1px solid #111111;
     padding-bottom: 12px;
+
+    margin-top: 0;
 }
 
 
+// Form Elements
 input[type=text] {
     height: 46px;
     padding: 0 16px;
