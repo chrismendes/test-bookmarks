@@ -1,1 +1,1 @@
-import './Bookmark.scss'
+import './Bookmark.scss';
