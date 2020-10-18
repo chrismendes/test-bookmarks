@@ -16,4 +16,3 @@ import IndexPage from './pages/index.js'
 const storage = new Storage('bookmark-manager');
 const indexPage = new IndexPage();
 const controller = new Controller(indexPage, storage);
-// controller.addBookmark('https://chrismendes.uk');

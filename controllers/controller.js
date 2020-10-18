@@ -11,7 +11,17 @@ export default class Controller {
     this.storage = storage;
 
     const bookmarks = this.storage.fetch();
-    this.view.render({ bookmarks: bookmarks });
+    const state = {
+      bookmarks: bookmarks
+    };
+    this.view.render(state, this.bindUIEvents.bind(this));
+  }
+
+  /**
+   * Bind events in view to controller response functions
+   */
+  bindUIEvents() {
+    this.view.bindAddBookmark(this.addBookmark.bind(this));
   }
 
   /**
@@ -25,7 +35,7 @@ export default class Controller {
       this.storage.insert(url);
     }
 
-    this.view.render({ bookmarks: this.storage.fetch() });
+    this.view.render({ bookmarks: this.storage.fetch() }, null, true);
   }
   
 }

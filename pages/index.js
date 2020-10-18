@@ -16,20 +16,34 @@ export default class IndexPage {
     this.pagination = new Pagination($containers.pagination);
   }
 
-  bindAddBookmark() {
-    
+  /**
+   * Bind function to form submit event
+   * 
+   * @param {function} handler Handler function provided by controller
+   */
+  bindAddBookmark(handler) {
+    this.addBookmarkForm.bindFormSubmit(handler);
   }
-  
+
   /**
    * Render the page
    * 
    * @param {object} data Data to pass to template HTML and render
+   * @param {function} bindEvents Event binding function to call when elements rendered
+   * @param {boolean} dataDisplayOnly Render/re-render data display components only
    */
-  render(data) {
+  render(data, bindEvents, dataDisplayOnly = false) {
     if(data.bookmarks) {
-      this.addBookmarkForm.render();
       this.bookmarkList.render(data.bookmarks);
       this.pagination.render(data.bookmarks.length);
+
+      if(!dataDisplayOnly) {
+        this.addBookmarkForm.render();
+      }
+
+      if(bindEvents) {
+        bindEvents();
+      }
     }
   }
   
