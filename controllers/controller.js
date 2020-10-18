@@ -24,6 +24,8 @@ export default class Controller {
     if(validURL === true) {
       this.storage.insert(url);
     }
+
+    this.view.render({ bookmarks: this.storage.fetch() });
   }
   
 }
