@@ -30,10 +30,6 @@ export default class Controller {
    */
   addBookmark(url) {
     this.storage.insert(url);
-    const state = {
-      bookmarks: this.storage.fetch()
-    };
-    // this.view.render(state, null, true);
     this.view.addBookmarkToDOM(url);
   }
 
@@ -44,10 +40,6 @@ export default class Controller {
    */
   deleteBookmark(bookmarkID) {
     this.storage.delete(bookmarkID);
-    const state = {
-      bookmarks: this.storage.fetch()
-    };
-    // this.view.render(state, this.bindUIEvents.bind(this), true);
     this.view.removeBookmarkFromDOM(bookmarkID);
   }
   
