@@ -2,7 +2,7 @@ import BookmarkList from '../components/BookmarkList';
 import Pagination from '../components/Pagination';
 
 export default class IndexPage {
-  
+
   constructor() {
     const $containers = {
       bookmarkList: document.querySelector('.js-bookmarks'),
@@ -13,6 +13,11 @@ export default class IndexPage {
     this.pagination = new Pagination($containers.pagination);
   }
 
+  /**
+   * Render the page
+   * 
+   * @param {object} data Data to pass to template HTML and render
+   */
   render(data) {
     if(data.bookmarks) {
       this.bookmarkList.render(data.bookmarks);
