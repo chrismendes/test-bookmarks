@@ -51,8 +51,14 @@ export default class BookmarkList {
   /**
    * Bind handler function to cancel button click
    */
-  bindDeleteClick(handler) {
-    for(const $button of this.$deleteButtons) {
+  bindDeleteClick($bookmark, handler) {
+    const $targetButtons = ($bookmark) ? $bookmark.querySelectorAll('button[data-action=delete]') : this.$deleteButtons;
+
+    if(!handler) {
+      return false;
+    }
+
+    for(const $button of $targetButtons) {
       $button.addEventListener('click', () => {
         const $bookmark = $button.parentNode.parentNode;
         if($bookmark) {
@@ -127,7 +133,7 @@ export default class BookmarkList {
    * 
    * @param {string} url Bookmark URL string
    */
-  addBookmark(url) {
+  addBookmark(url, saveHandler, deleteHandler) {
     const bookmarkID = 0;
     const $bookmark = this.createBookmarkElement(bookmarkID, url);
     this.$container.prepend($bookmark);
@@ -135,6 +141,7 @@ export default class BookmarkList {
     this.updateBookmarkIDs();
     this.bindEditClick($bookmark);
     this.bindCancelClick($bookmark);
+    this.bindDeleteClick($bookmark, deleteHandler);
   }
 
   /**
@@ -172,8 +179,6 @@ export default class BookmarkList {
 
     this.bindEditClick();
     this.bindCancelClick();
-    // this.bindSaveClick();
-    // this.bindDeleteClick();
   }
 
 }

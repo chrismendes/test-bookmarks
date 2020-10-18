@@ -14,6 +14,7 @@ export default class IndexPage {
     this.addBookmarkForm = new AddBookmarkForm($containers.addBookmarkForm);
     this.bookmarkList = new BookmarkList($containers.bookmarkList);
     this.pagination = new Pagination($containers.pagination);
+    this.parentHandlers = {};
   }
 
   /**
@@ -22,6 +23,7 @@ export default class IndexPage {
    * @param {function} handler Handler function provided by controller
    */
   bindAddBookmark(handler) {
+    this.parentHandlers['add'] = handler;
     this.addBookmarkForm.bindFormSubmit(handler);
   }
 
@@ -31,7 +33,8 @@ export default class IndexPage {
    * @param {function} handler Handler function provided by controller
    */
   bindDeleteBookmark(handler) {
-    this.bookmarkList.bindDeleteClick(handler);
+    this.parentHandlers['delete'] = handler;
+    this.bookmarkList.bindDeleteClick(null, handler);
   }
 
   /**
@@ -58,7 +61,7 @@ export default class IndexPage {
    * @param {string} bookmarkURL Bookmark URL string
    */
   addBookmarkToDOM(bookmarkURL) {
-    this.bookmarkList.addBookmark(bookmarkURL);
+    this.bookmarkList.addBookmark(bookmarkURL, this.parentHandlers['save'], this.parentHandlers['delete']);
   }
 
   /**
