@@ -1,5 +1,3 @@
-import { validateURL } from '../helpers/validate';
-
 export default class Controller {
 
   /**
