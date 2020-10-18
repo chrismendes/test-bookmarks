@@ -31,23 +31,46 @@ export default class Storage {
   }
 
   /**
-   * Insert bookmark into storage
-   * 
-   * @param {string} bookmarkIn URL string
-   */
-  insert(bookmarkIn) {
-    const bookmarks = this.getBookmarks();
-    bookmarks.push(bookmarkIn);
-    this.setBookmarks(bookmarks);
-  }
-
-  /**
    * Fetch all bookmarks from storage
    * 
    * @returns {array} Array of URL strings, or empty array
    */
   fetch() {
     return this.getBookmarks();
+  }
+  
+  /**
+   * Insert bookmark into storage
+   * 
+   * @param {string} bookmarkIn URL string
+   */
+  insert(bookmarkIn) {
+    const bookmarks = this.getBookmarks();
+    bookmarks.unshift(bookmarkIn);
+    this.setBookmarks(bookmarks);
+  }
+
+  /**
+   * Update bookmark at given index with given value
+   * 
+   * @param {number} index Position of bookmark to edit
+   * @param {string} bookmarkURL New bookmark URL
+   */
+  update(index, bookmarkURL) {
+    const bookmarks = this.getBookmarks();
+    bookmarks[index] = bookmarkURL;
+    this.setBookmarks(bookmarks);
+  }
+
+  /**
+   * Delete bookmark at given index
+   * 
+   * @param {number} index Position of bookmark to delete
+   */
+  delete(index) {
+    const bookmarks = this.getBookmarks();
+    bookmarks.splice(index, 1);
+    this.setBookmarks(bookmarks);
   }
 
 }
