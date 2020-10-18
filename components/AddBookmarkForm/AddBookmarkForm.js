@@ -63,7 +63,7 @@ export default class AddBookmarkForm {
   }
 
   /**
-   * Post-render duties (e.g. reacquire DOM elements)
+   * Post-render duties (e.g. cache DOM elements)
    */
   postRender() {
     this.$form = this.$container.querySelector('form');
