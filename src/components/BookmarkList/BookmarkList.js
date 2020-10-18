@@ -55,9 +55,11 @@ export default class BookmarkList {
     for(const $button of this.$deleteButtons) {
       $button.addEventListener('click', () => {
         const $bookmark = $button.parentNode.parentNode;
-        const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
-        if(bookmarkID) {
-          handler(bookmarkID);
+        if($bookmark) {
+          const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
+          if(bookmarkID) {
+            handler(bookmarkID);
+          }
         }
       });
     }
