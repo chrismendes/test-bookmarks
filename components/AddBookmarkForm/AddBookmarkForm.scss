@@ -10,5 +10,12 @@ h2 ~ .addbookmarkform {
     color: #ff0000;
 
     margin-top: 16px;
+    display: none;
+}
+
+.addbookmarkform.is-error > .addbookmarkform_error {
     display: block;
+}
+.addbookmarkform.is-error > input[type=text] {
+    border: 1px solid #ff0000;
 }

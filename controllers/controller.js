@@ -30,11 +30,7 @@ export default class Controller {
    * @param {string} url Web page URL
    */
   addBookmark(url) {
-    const validURL = validateURL(url);
-    if(validURL === true) {
-      this.storage.insert(url);
-    }
-
+    this.storage.insert(url);
     this.view.render({ bookmarks: this.storage.fetch() }, null, true);
   }
   
