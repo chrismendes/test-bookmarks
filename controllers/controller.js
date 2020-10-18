@@ -3,11 +3,11 @@ import { validateURL } from '../helpers/validate';
 export default class Controller {
 
   /**
-   * @param {!View} view View instance
-   * @param {!Storage*} storage Storage instance
+   * @param {IndexPage|SubmittedPage} view View/Page instance
+   * @param {Storage} storage Storage instance
    */
-  constructor(view, storage) {
-    this.view = view;
+  constructor(initView, storage) {
+    this.view = initView;
     this.storage = storage;
 
     const bookmarks = this.storage.fetch();
