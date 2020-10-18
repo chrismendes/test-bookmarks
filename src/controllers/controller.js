@@ -21,6 +21,7 @@ export default class Controller {
   bindUIEvents() {
     this.view.bindAddBookmark(this.addBookmark.bind(this));
     this.view.bindDeleteBookmark(this.deleteBookmark.bind(this));
+    this.view.bindUpdateBookmark(this.updateBookmark.bind(this));
   }
 
   /**
@@ -41,6 +42,17 @@ export default class Controller {
   deleteBookmark(bookmarkID) {
     this.storage.delete(bookmarkID);
     this.view.removeBookmarkFromDOM(bookmarkID);
+  }
+
+  /**
+   * Update bookmark in storage and render
+   * 
+   * @param {number} bookmarkID Bookmark ID
+   * @param {string} url Web page URL
+   */
+  updateBookmark(bookmarkID, url) {
+    this.storage.update(bookmarkID, url);
+    this.view.updateBookmarkInDOM(bookmarkID, url);
   }
   
 }

@@ -38,6 +38,16 @@ export default class IndexPage {
   }
 
   /**
+   * Bind function to bookmark update event
+   * 
+   * @param {function} handler Handler function provided by controller
+   */
+  bindUpdateBookmark(handler) {
+    this.parentHandlers['save'] = handler;
+    this.bookmarkList.bindSaveClick(null, handler);
+  }
+
+  /**
    * Render the page
    * 
    * @param {object} data Data to pass to template HTML and render
@@ -71,6 +81,16 @@ export default class IndexPage {
    */
   removeBookmarkFromDOM(bookmarkID) {
     this.bookmarkList.deleteBookmark(bookmarkID);
+  }
+
+  /**
+   * Trigger bookmark update by dispatching to BookmarkList component
+   * 
+   * @param {number} bookmarkID Bookmark ID used to pick bookmark from DOM
+   * @param {string} url Bookmark URL
+   */
+  updateBookmarkInDOM(bookmarkID, url) {
+    this.bookmarkList.updateBookmark(bookmarkID, url);
   }
 
 }

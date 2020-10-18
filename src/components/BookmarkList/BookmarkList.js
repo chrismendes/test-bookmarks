@@ -72,6 +72,31 @@ export default class BookmarkList {
   }
 
   /**
+   * Bind handler function to save button click
+   */
+  bindSaveClick($bookmark, handler) {
+    const $targetButtons = ($bookmark) ? $bookmark.querySelectorAll('button[data-action=save]') : this.$saveButtons;
+
+    if(!handler) {
+      return false;
+    }
+
+    for(const $button of $targetButtons) {
+      $button.addEventListener('click', () => {
+        const $bookmark = $button.parentNode.parentNode;
+        const $input = $bookmark.querySelector('.bookmark_editurl');
+        if($bookmark && $input) {
+          const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
+          const url = $input.value;
+          if(bookmarkID && url) {
+            handler(bookmarkID, url);
+          }
+        }
+      });
+    }
+  }
+
+  /**
    * Show/hide edit controls when toggle edit mode for bookmark
    * 
    * @param {number} bookmarkID Bookmark ID used to pick elements from DOM
@@ -138,29 +163,48 @@ export default class BookmarkList {
     const $bookmark = this.createBookmarkElement(bookmarkID, url);
     this.$container.prepend($bookmark);
 
-    this.updateBookmarkIDs();
+    this.reassignBookmarkIDs();
     this.bindEditClick($bookmark);
     this.bindCancelClick($bookmark);
     this.bindDeleteClick($bookmark, deleteHandler);
+    this.bindSaveClick($bookmark, saveHandler);
   }
 
   /**
    * Remove bookmark element from list
    * 
-   * @param {number} id Bookmark ID used to pick bookmark from DOM
+   * @param {number} bookmarkID Bookmark ID used to pick bookmark from DOM
    */
   deleteBookmark(bookmarkID) {
     const $bookmark = document.querySelector(`.bookmark[data-bookmarkid="${bookmarkID}"`);
     if($bookmark) {
       $bookmark.remove();
-      this.updateBookmarkIDs();
+      this.reassignBookmarkIDs();
+    }
+  }
+
+  /**
+   * Update bookmark element in list
+   * 
+   * @param {number} bookmarkID Bookmark ID used to pick bookmark from DOM
+   * @param {string} url New bookmark URL
+   */
+  updateBookmark(bookmarkID, url) {
+    const $bookmark = document.querySelector(`.bookmark[data-bookmarkid="${bookmarkID}"`);
+    if($bookmark) {
+      const $url = $bookmark.querySelector('.bookmark_url');
+      if($url) {
+        $url.textContent = url;
+        $url.setAttribute('href', url);
+        this.toggleEditMode(bookmarkID);
+      }
     }
   }
 
   /**
    * Update bookmark IDs kept in data-bookmarkid to reflect sequential order (0, 1, 2, etc)
    */
-  updateBookmarkIDs() {
+  reassignBookmarkIDs() {
     this.$bookmarks = this.$container.querySelectorAll('.bookmark');
     for(let i = 0; i < this.$bookmarks.length; i++) {
       this.$bookmarks[i].setAttribute('data-bookmarkid', i);
