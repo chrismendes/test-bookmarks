@@ -20,6 +20,7 @@ export default class Controller {
    */
   bindUIEvents() {
     this.view.bindAddBookmark(this.addBookmark.bind(this));
+    this.view.bindDeleteBookmark(this.deleteBookmark.bind(this));
   }
 
   /**
@@ -29,7 +30,24 @@ export default class Controller {
    */
   addBookmark(url) {
     this.storage.insert(url);
-    this.view.render({ bookmarks: this.storage.fetch() }, null, true);
+    const state = {
+      bookmarks: this.storage.fetch()
+    };
+    // this.view.render(state, null, true);
+    this.view.addBookmarkToList(url);
+  }
+
+  /**
+   * Delete bookmark to storage and render
+   * 
+   * @param {string} url Web page URL
+   */
+  deleteBookmark(bookmarkID) {
+    this.storage.delete(bookmarkID);
+    const state = {
+      bookmarks: this.storage.fetch()
+    };
+    this.view.render(state, this.bindUIEvents.bind(this), true);
   }
   
 }

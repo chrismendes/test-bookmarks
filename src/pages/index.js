@@ -26,6 +26,15 @@ export default class IndexPage {
   }
 
   /**
+   * Bind function to bookmark delete event
+   * 
+   * @param {function} handler Handler function provided by controller
+   */
+  bindDeleteBookmark(handler) {
+    this.bookmarkList.bindDeleteClick(handler);
+  }
+
+  /**
    * Render the page
    * 
    * @param {object} data Data to pass to template HTML and render
@@ -46,5 +55,12 @@ export default class IndexPage {
       }
     }
   }
-  
+
+  /**
+   * 
+   */
+  addBookmarkToList(bookmarkURL) {
+    this.bookmarkList.addBookmark(bookmarkURL);
+  }
+
 }
