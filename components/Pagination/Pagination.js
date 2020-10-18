@@ -26,8 +26,8 @@ export default class Pagination {
   render(itemsTotal, currentPage = 1, perPage = 20) {
     if(this.$container) {
       const totalPages = this.calculatePagesTotal(itemsTotal, perPage);
-      const prevClass = (currentPage > totalPages) ? '' : 'is-disabled';
-      const nextClass = (currentPage < totalPages) ? '' : 'is-disabled';
+      const prevClass = (currentPage > totalPages && itemsTotal > 0) ? '' : 'is-disabled';
+      const nextClass = (currentPage < totalPages && itemsTotal > 0) ? '' : 'is-disabled';
 
       let html = `
         <ul class="pagination">
