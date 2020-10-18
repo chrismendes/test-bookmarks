@@ -39,16 +39,12 @@ export default class IndexPage {
    * 
    * @param {object} data Data to pass to template HTML and render
    * @param {function} bindEvents Event binding function to call when elements rendered
-   * @param {boolean} dataDisplayOnly Render/re-render data display components only
    */
-  render(data, bindEvents, dataDisplayOnly = false) {
+  render(data, bindEvents) {
     if(data.bookmarks) {
       this.bookmarkList.render(data.bookmarks);
       this.pagination.render(data.bookmarks.length);
-
-      if(!dataDisplayOnly) {
-        this.addBookmarkForm.render();
-      }
+      this.addBookmarkForm.render();
 
       if(bindEvents) {
         bindEvents();
