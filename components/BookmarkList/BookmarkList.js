@@ -21,6 +21,7 @@ export default class BookmarkList {
         <div class="bookmark_buttons">
           <button class="button button-secondary" data-action="edit" data-bookmarkid="${index}">Edit</button>
           <button class="button button-last" data-action="delete" data-bookmarkid="${index}">Delete</button>
+          <button class="button button-last" data-action="cancel" data-bookmarkid="${index}">Cancel</button>
           <button class="button" data-action="save" data-bookmarkid="${index}">Save</button>
         </div>
       </div>
@@ -33,8 +34,22 @@ export default class BookmarkList {
   /**
    * Bind handler function to edit button click
    */
-  bindEditModeClick() {
+  bindEditClick() {
     for(const $button of this.$editButtons) {
+      $button.addEventListener('click', () => {
+        const bookmarkID = $button.getAttribute('data-bookmarkid');
+        if(bookmarkID) {
+          this.toggleEditMode(bookmarkID);
+        }
+      });
+    }
+  }
+
+  /**
+   * Bind handler function to cancel button click
+   */
+  bindCancelClick() {
+    for(const $button of this.$cancelButtons) {
       $button.addEventListener('click', () => {
         const bookmarkID = $button.getAttribute('data-bookmarkid');
         if(bookmarkID) {
@@ -67,7 +82,9 @@ export default class BookmarkList {
    */
   postRender() {
     this.$editButtons = this.$container.querySelectorAll('button[data-action=edit]');
-    this.bindEditModeClick();
+    this.$cancelButtons = this.$container.querySelectorAll('button[data-action=cancel]');
+    this.bindEditClick();
+    this.bindCancelClick();
   }
 
 }

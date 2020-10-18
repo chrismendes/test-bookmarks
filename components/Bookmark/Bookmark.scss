@@ -45,10 +45,11 @@
     align-items: center;
     margin-right: 20px;
 }
-.bookmark > .bookmark_buttons > button:first-child {
-    margin: 0 10px;
+.bookmark > .bookmark_buttons > button {
+    margin-left: 10px;
 }
-.bookmark .bookmark_buttons > button[data-action=save] {
+.bookmark .bookmark_buttons > button[data-action=save],
+.bookmark .bookmark_buttons > button[data-action=cancel] {
     display: none;
 }
 
@@ -61,13 +62,12 @@
     .bookmark_editurl {
         display: block;
     }
-    .bookmark_buttons > button[data-action=edit] {
-        display: none;
-    }
+    .bookmark_buttons > button[data-action=edit],
     .bookmark_buttons > button[data-action=delete] {
         display: none;
     }
-    .bookmark_buttons > button[data-action=save] {
+    .bookmark_buttons > button[data-action=save],
+    .bookmark_buttons > button[data-action=cancel] {
         display: inline-block;
     }
 }
