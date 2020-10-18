@@ -54,7 +54,8 @@ export default class BookmarkList {
   bindDeleteClick(handler) {
     for(const $button of this.$deleteButtons) {
       $button.addEventListener('click', () => {
-        const bookmarkID = $button.getAttribute('data-bookmarkid');
+        const $bookmark = $button.parentNode.parentNode;
+        const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
         if(bookmarkID) {
           handler(bookmarkID);
         }
