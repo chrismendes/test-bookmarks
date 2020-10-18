@@ -57,10 +57,21 @@ export default class IndexPage {
   }
 
   /**
+   * Trigger new bookmark display by dispatching to BookmarkList component
    * 
+   * @param {string} bookmarkURL Bookmark URL string
    */
-  addBookmarkToList(bookmarkURL) {
+  addBookmarkToDOM(bookmarkURL) {
     this.bookmarkList.addBookmark(bookmarkURL);
+  }
+
+  /**
+   * Trigger bookmark removal by dispatching to BookmarkList component
+   * 
+   * @param {number} bookmarkID Bookmark ID used to pick bookmark from DOM
+   */
+  removeBookmarkFromDOM(bookmarkID) {
+    this.bookmarkList.deleteBookmark(bookmarkID);
   }
 
 }

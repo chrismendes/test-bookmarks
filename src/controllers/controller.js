@@ -34,7 +34,7 @@ export default class Controller {
       bookmarks: this.storage.fetch()
     };
     // this.view.render(state, null, true);
-    this.view.addBookmarkToList(url);
+    this.view.addBookmarkToDOM(url);
   }
 
   /**
@@ -47,7 +47,8 @@ export default class Controller {
     const state = {
       bookmarks: this.storage.fetch()
     };
-    this.view.render(state, this.bindUIEvents.bind(this), true);
+    // this.view.render(state, this.bindUIEvents.bind(this), true);
+    this.view.removeBookmarkFromDOM(bookmarkID);
   }
   
 }
