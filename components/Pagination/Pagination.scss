@@ -28,3 +28,12 @@
 .pagination > li.is-active > a {
     background: #e6f4ff;
 }
+
+.pagination > li.is-disabled > a {
+    color: #c0c0c0;
+    cursor: not-allowed;
+    
+    &:hover {
+        background-color: inherit;
+    }
+}

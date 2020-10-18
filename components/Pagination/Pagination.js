@@ -25,19 +25,21 @@ export default class Pagination {
    */
   render(itemsTotal, currentPage = 1, perPage = 20) {
     if(this.$container) {
-      const pages = this.calculatePagesTotal(itemsTotal, perPage);
+      const totalPages = this.calculatePagesTotal(itemsTotal, perPage);
+      const prevClass = (currentPage > totalPages) ? '' : 'is-disabled';
+      const nextClass = (currentPage < totalPages) ? '' : 'is-disabled';
 
       let html = `
         <ul class="pagination">
-          <li><a href="#">Prev</a></li>
+          <li class="${prevClass}"><a href="#">Prev</a></li>
       `;
-      for(let i = 0; i < pages; i++) {
+      for(let i = 0; i < totalPages; i++) {
         html += (currentPage === i+1) ? `<li class="is-active">` : `<li>`;
         html += `<a href="#">${i+1}</a>`;
         html += `</li>`;
       }
       html += `
-          <li><a href="#">Next</a></li>
+      <li class="${nextClass}"><a href="#">Next</a></li>
         </ul>
       `;
       this.$container.innerHTML = html;
