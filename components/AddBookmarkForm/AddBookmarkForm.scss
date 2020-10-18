@@ -1,12 +1,12 @@
-.form > input[type=text] ~ button {
+.addbookmarkform > input[type=text] ~ button {
     margin-left: 16px;
 }
 
-h2 ~ .form {
+h2 ~ .addbookmarkform {
     margin-top: 30px;
 }
 
-.form > .form_error {
+.addbookmarkform > .addbookmarkform_error {
     color: #ff0000;
 
     margin-top: 16px;
