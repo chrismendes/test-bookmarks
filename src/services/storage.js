@@ -38,7 +38,17 @@ export default class Storage {
   fetch() {
     return this.getBookmarks();
   }
-  
+
+  /**
+   * Fetch last bookmark to be added to storage
+   * 
+   * @returns {string} Bookmark URL string
+   */
+  fetchLast() {
+    const bookmarks = this.getBookmarks();
+    return bookmarks[0];
+  }
+
   /**
    * Insert bookmark into storage
    * 
