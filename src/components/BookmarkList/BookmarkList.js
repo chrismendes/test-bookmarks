@@ -17,11 +17,14 @@ export default class BookmarkList {
     const $bookmark = document.querySelector(`.bookmark[data-bookmarkid="${bookmarkID}"`);
     const className = 'is-editing';
     const $input = $bookmark.querySelector('.bookmark_editurl');
+    const $url = $bookmark.querySelector('.bookmark_url');
+    const url = $url.getAttribute('href');
 
     if($bookmark) {
       this.clearBookmarkError($bookmark);
       $bookmark.classList.toggle(className);
       if($input) {
+        $input.value = url;
         $input.select();
       }
     }
