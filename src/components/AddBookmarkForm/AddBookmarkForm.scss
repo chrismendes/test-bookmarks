@@ -1,5 +1,31 @@
-.addbookmarkform > input[type=text] ~ button {
+.addbookmarkform {
+    width: 600px;
+    max-width: 100%;
+    display: flex;
+    position: relative;
+
+    padding: 20px 0;
+    
+    @media(max-width: 800px) {
+        width: auto;
+    }
+    @media(max-width: 400px) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.addbookmarkform > .addbookmarkform_input {
+    flex-grow: 1;
+}
+
+.addbookmarkform > .addbookmarkform_button {
     margin-left: 16px;
+
+    @media(max-width: 400px) {
+        margin-left: 0;
+        margin-top: 16px;
+    }
 }
 
 h2 ~ .addbookmarkform {
@@ -7,15 +33,28 @@ h2 ~ .addbookmarkform {
 }
 
 .addbookmarkform > .addbookmarkform_error {
-    color: #ff0000;
-
-    margin-top: 16px;
+    position: absolute;
+    top: -10px;
+    left: 0;
     display: none;
+
+    padding: 6px 10px;
+    
+    color: #ffffff;
+    background: #ff0000;
+
+    @media(max-width: 400px) {
+        position: relative;
+        margin-top: 20px;
+
+        color: #ff0000;
+        background: transparent;
+    }
 }
 
 .addbookmarkform.is-error > .addbookmarkform_error {
     display: block;
 }
-.addbookmarkform.is-error > input[type=text] {
+.addbookmarkform.is-error > .addbookmarkform_input {
     border: 1px solid #ff0000;
 }

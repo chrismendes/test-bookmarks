@@ -53,8 +53,8 @@ export default class AddBookmarkForm {
     if(this.$container) {
       const result = `
         <form class="addbookmarkform">
-          <input type="text" placeholder="Enter URL" size="40" />
-          <button type="submit" class="button">Add Bookmark</button>
+          <input class="addbookmarkform_input" type="text" placeholder="Enter URL" />
+          <button type="submit" class="button addbookmarkform_button">Add Bookmark</button>
           <span class="addbookmarkform_error js-error"></span>
         </form>
       `;
