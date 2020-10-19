@@ -14,7 +14,7 @@ export default class Controller {
    * 
    * @param {string} appUrl Document location hash (e.g. #/, #/submitted)
    */
-  setView(appUrl) {
+  loadPage(appUrl) {
     const route = appUrl.replace(/^#\//, '');
     this.view = this.routes[route];
 
@@ -23,6 +23,17 @@ export default class Controller {
     }
     if(route === 'submitted') {
       this.loadSubmittedPage();
+    }
+  }
+
+  /**
+   * Trigger page navigation
+   * 
+   * @param {string} page Page name as defined by app routes
+   */
+  changePage(page) {
+    if(page && this.routes[page]) {
+      window.location.href = `#/${page}`;
     }
   }
 
@@ -55,8 +66,7 @@ export default class Controller {
    */
   addBookmark(url) {
     this.storage.insert(url);
-    const bookmarks = this.storage.fetch();
-    this.view.updateBookmarks(bookmarks);
+    this.changePage('submitted');
   }
 
   /**

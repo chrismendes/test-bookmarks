@@ -25,5 +25,5 @@ const routes = {
 
 const controller = new Controller(routes, storage);
 
-window.addEventListener('load', () => controller.setView(document.location.hash));
-window.addEventListener('hashchange', () => controller.setView(document.location.hash));
+window.addEventListener('load', () => controller.loadPage(document.location.hash));
+window.addEventListener('hashchange', () => controller.loadPage(document.location.hash));
