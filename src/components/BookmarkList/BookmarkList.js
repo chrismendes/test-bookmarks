@@ -1,4 +1,5 @@
 import '../Bookmark';
+import '../Memo/Memo.scss';
 
 export default class BookmarkList {
 
@@ -129,6 +130,21 @@ export default class BookmarkList {
   }
 
   /**
+   * Create DOM element for displaying "No bookmarks" message
+   */
+  createEmptyListMessage() {
+    const div = document.createElement('div');
+    const html = `
+      <div class="memo">
+        <h2 class="memo_title">Bookmark List Empty</h2>
+        <span class="memo_msg">Add a new bookmark above.</span>
+      </div>
+    `;
+    div.innerHTML = html;
+    return div.firstElementChild;
+  }
+
+  /**
    * Generate HTML for bookmark list
    * 
    * @param {array} bookmarks Array of bookmark URL strings
@@ -138,15 +154,22 @@ export default class BookmarkList {
     if(!this.$container) return false;
     this.$container.innerHTML = '';
 
-    const listSize = (bookmarks.length > limit) ? limit : bookmarks.length;
-    const indexEnd = ((indexStart+listSize) > bookmarks.length) ? bookmarks.length : (indexStart+listSize);
+    if(bookmarks.length > 0) {
 
-    for(let i = indexStart; i < indexEnd; i++) {
-      const $bookmark = this.createBookmarkElement(i, bookmarks[i]);
-      this.$container.appendChild($bookmark);
+      const listSize = (bookmarks.length > limit) ? limit : bookmarks.length;
+      const indexEnd = ((indexStart+listSize) > bookmarks.length) ? bookmarks.length : (indexStart+listSize);
+
+      for(let i = indexStart; i < indexEnd; i++) {
+        const $bookmark = this.createBookmarkElement(i, bookmarks[i]);
+        this.$container.appendChild($bookmark);
+      }
+      this.cacheElements();
+      this.bindActionButtons();
+
+    } else {
+      const $emptyMessage = this.createEmptyListMessage();
+      this.$container.appendChild($emptyMessage);
     }
-    this.cacheElements();
-    this.bindActionButtons();
   }
 
   /**
