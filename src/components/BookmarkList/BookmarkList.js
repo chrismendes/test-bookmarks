@@ -1,5 +1,6 @@
 import '../Bookmark';
 import '../Memo/Memo.scss';
+import { validateURL } from '../../helpers/validate';
 
 export default class BookmarkList {
   
@@ -18,10 +19,31 @@ export default class BookmarkList {
     const $input = $bookmark.querySelector('.bookmark_editurl');
 
     if($bookmark) {
+      this.clearBookmarkError($bookmark);
       $bookmark.classList.toggle(className);
       if($input) {
         $input.select();
       }
+    }
+  }
+
+  /**
+   * Add class to bookmark element to add error state
+   * @param {element} $bookmark Bookmark element
+   */
+  addBookmarkError($bookmark) {
+    if($bookmark) {
+      $bookmark.classList.add('is-invalid');
+    }
+  }
+  
+  /**
+   * Add class to bookmark element to withdraw error state
+   * @param {element} $bookmark Bookmark element
+   */
+  clearBookmarkError($bookmark) {
+    if($bookmark) {
+      $bookmark.classList.remove('is-invalid');
     }
   }
 
@@ -33,14 +55,20 @@ export default class BookmarkList {
   updateBookmark(bookmarkID) {
     const $bookmark = document.querySelector(`.bookmark[data-bookmarkid="${bookmarkID}"`);
     const newURL = $bookmark.querySelector('.bookmark_editurl').value;
+    const validURL = validateURL(newURL);
 
     if($bookmark && newURL) {
-      const $url = $bookmark.querySelector('.bookmark_url');
-      if($url) {
-        $url.textContent = newURL;
-        $url.setAttribute('href', newURL);
-        this.toggleEditMode(bookmarkID);
-        this.parentHandlers['save'](bookmarkID, newURL);
+      if(validURL) {
+        const $url = $bookmark.querySelector('.bookmark_url');
+        if($url) {
+          $url.textContent = newURL;
+          $url.setAttribute('href', newURL);
+          this.toggleEditMode(bookmarkID);
+          this.parentHandlers['save'](bookmarkID, newURL);
+          this.clearBookmarkError($bookmark);
+        }
+      } else {
+        this.addBookmarkError($bookmark);
       }
     }
   }
@@ -131,6 +159,7 @@ export default class BookmarkList {
       <div class="bookmark" data-bookmarkid="${id}">
         <a class="bookmark_url" href="${url}" target="_blank">${url}</a>
         <input class="bookmark_editurl" type="text" value="${url}" />
+        <span class="bookmark_error">Please specify a valid URL</span>
         <div class="bookmark_buttons">
           <button class="button button-secondary" data-action="edit">Edit</button>
           <button class="button button-last" data-action="delete">Delete</button>
