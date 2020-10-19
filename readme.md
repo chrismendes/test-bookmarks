@@ -26,7 +26,6 @@
 **Limitations**
 
 * Components are completely re-rendered upon update, as opposed to constituent elements only, and thus this solution is relatively less performant, given the absence of a virtual DOM implementation as with libraries such as React.js
-* Not responsive due to time restrictions (desktop only)
 * Not thoroughly tested cross-browser due to time restriction (modern browser such as Chrome recommended)
 
 ## License
