@@ -9,3 +9,24 @@ export function validateURL(url) {
   return !!pattern.test(url);
 
 }
+
+function urlHasProtocol(url) {
+  const pattern = /^https?:\/\//i;
+  return pattern.test(url)
+}
+
+export function urlWithoutProtocol(url) {
+  if(urlHasProtocol(url) === true) {
+    url = url.replace(/(^\w+:|^)\/\//, ''); // (Remove protocol)
+    url = url.replace(/\/$/, ''); // (Remove trailing slash)
+  }
+  return url;
+}
+
+export function urlWithProtocol(url) {
+  const defaultProtocol = 'https://';
+  if(urlHasProtocol(url) === false) {
+    url = defaultProtocol + url;
+  }
+  return url;
+}

@@ -1,5 +1,5 @@
 import './AddBookmarkForm.scss';
-import { validateURL } from '../../helpers/validate';
+import { validateURL } from '../../helpers/url';
 
 export default class AddBookmarkForm {
 
