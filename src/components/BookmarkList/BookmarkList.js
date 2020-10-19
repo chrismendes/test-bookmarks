@@ -133,14 +133,15 @@ export default class BookmarkList {
    * 
    * @param {array} bookmarks Array of bookmark URL strings
    */
-  render($container, bookmarks, offset = 0, limit = 10) {
+  render($container, bookmarks, indexStart = 0, limit = 10) {
     this.$container = $container;
     if(!this.$container) return false;
     this.$container.innerHTML = '';
 
     const listSize = (bookmarks.length > limit) ? limit : bookmarks.length;
+    const indexEnd = ((indexStart+listSize) > bookmarks.length) ? bookmarks.length : (indexStart+listSize);
 
-    for(let i = offset; i < listSize; i++) {
+    for(let i = indexStart; i < indexEnd; i++) {
       const $bookmark = this.createBookmarkElement(i, bookmarks[i]);
       this.$container.appendChild($bookmark);
     }

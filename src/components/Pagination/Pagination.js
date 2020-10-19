@@ -20,7 +20,7 @@ export default class Pagination {
    */
   render($container, itemsTotal, currentPage = 1, itemsPerPage = 10) {
     this.$container = $container;
-console.log(itemsPerPage);
+
     if(this.$container) {
       const totalPages = this.calculatePagesTotal(itemsTotal, itemsPerPage);
       const prevClass = (currentPage > totalPages && itemsTotal > 0) ? '' : 'is-disabled';

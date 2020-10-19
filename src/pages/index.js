@@ -43,12 +43,12 @@ export default class IndexPage {
    * @param {object} data Data to pass to template HTML and render
    * @param {function} bindEvents Event binding function to call when elements rendered
    */
-  render(data, currentPage = 1) {
+  render(data, currentPage = 3) {
     if(data.bookmarks) {
       this.renderComponentContainers();
       this.initComponents();
 
-      const bookmarksPerPage = 5;
+      const bookmarksPerPage = 2;
       const offset = ((currentPage-1) * bookmarksPerPage);
 
       this.bookmarkList.render(this.$containers.bookmarkList, data.bookmarks, offset, bookmarksPerPage);
