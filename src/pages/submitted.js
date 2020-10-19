@@ -2,6 +2,11 @@ import '../components/Memo/Memo.scss';
 
 export default class SubmittedPage {
 
+  /**
+   * Render page with "Bookmark submitted" message
+   * 
+   * @param {object} data Provided data for rendering to page
+   */
   render(data) {
     const lastBookmark = data.lastBookmark;
     const $container = document.querySelector('.js-appview');
