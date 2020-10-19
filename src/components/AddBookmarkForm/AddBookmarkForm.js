@@ -48,7 +48,8 @@ export default class AddBookmarkForm {
   /**
    * Inject HTML for bookmark list into DOM
    */
-  render() {
+  render($container) {
+    this.$container = $container;
     if(this.$container) {
       const result = `
         <form class="addbookmarkform">

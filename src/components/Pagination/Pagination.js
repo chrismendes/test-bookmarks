@@ -23,7 +23,9 @@ export default class Pagination {
    * @param {number} currentPage Current active page
    * @param {number} perPage Number of items per page
    */
-  render(itemsTotal, currentPage = 1, perPage = 20) {
+  render($container, itemsTotal, currentPage = 1, perPage = 20) {
+    this.$container = $container;
+
     if(this.$container) {
       const totalPages = this.calculatePagesTotal(itemsTotal, perPage);
       const prevClass = (currentPage > totalPages && itemsTotal > 0) ? '' : 'is-disabled';

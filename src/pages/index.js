@@ -5,16 +5,8 @@ import Pagination from '../components/Pagination';
 export default class IndexPage {
 
   constructor() {
-    const $containers = {
-      addBookmarkForm: document.querySelector('.js-addbookmarkform'),
-      bookmarkList:    document.querySelector('.js-bookmarks'),
-      pagination:      document.querySelector('.js-pagination')
-    };
-
-    this.addBookmarkForm = new AddBookmarkForm($containers.addBookmarkForm);
-    this.bookmarkList = new BookmarkList($containers.bookmarkList);
-    this.pagination = new Pagination($containers.pagination);
     this.parentHandlers = {};
+    this.$containers = {};
   }
 
   /**
@@ -53,10 +45,52 @@ export default class IndexPage {
    */
   render(data) {
     if(data.bookmarks) {
-      this.bookmarkList.render(data.bookmarks);
-      this.pagination.render(data.bookmarks.length);
-      this.addBookmarkForm.render();
+      this.renderComponentContainers();
+      this.initComponents();
+      this.bookmarkList.render(this.$containers.bookmarkList, data.bookmarks);
+      this.pagination.render(this.$containers.pagination, data.bookmarks.length);
+      this.addBookmarkForm.render(this.$containers.addBookmarkForm);
     }
+  }
+
+  /**
+   * Inject component container markup into the DOM
+   */
+  renderComponentContainers() {
+    const $container = document.querySelector('.js-appview');
+    const html = `
+      <div class="l-section-highlighted">
+        <div class="l-container">
+          <div class="js-addbookmarkform"></div>
+        </div>
+      </div>
+      <div class="l-section">
+        <div class="l-container">
+          <div class="js-bookmarks"></div>
+        </div>
+      </div>
+      <div class="l-section">
+        <div class="l-container">
+          <div class="js-pagination"></div>
+        </div>
+      </div>
+    `;
+    $container.innerHTML = html;
+  }
+
+  /**
+   * Initialise components and provide container DOM elements
+   */
+  initComponents() {
+    this.$containers = {
+      addBookmarkForm: document.querySelector('.js-addbookmarkform'),
+      bookmarkList:    document.querySelector('.js-bookmarks'),
+      pagination:      document.querySelector('.js-pagination')
+    };
+
+    this.addBookmarkForm = new AddBookmarkForm();
+    this.bookmarkList = new BookmarkList();
+    this.pagination = new Pagination();
   }
 
   /**
@@ -65,7 +99,7 @@ export default class IndexPage {
    * @param {array} bookmarks Array of bookmark URL strings
    */
   updateBookmarks(bookmarks) {
-    this.bookmarkList.render(bookmarks);
+    this.bookmarkList.render(this.$containers.bookmarkList, bookmarks);
   }
   
 }

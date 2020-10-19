@@ -58,6 +58,7 @@ export default class BookmarkList {
    * Update bookmark IDs kept in data-bookmarkid to reflect sequential order (0, 1, 2, etc)
    */
   reassignBookmarkIDs() {
+console.log(this.$container);
     this.$bookmarks = this.$container.querySelectorAll('.bookmark');
     for(let i = 0; i < this.$bookmarks.length; i++) {
       this.$bookmarks[i].setAttribute('data-bookmarkid', i);
@@ -134,8 +135,10 @@ export default class BookmarkList {
    * 
    * @param {array} bookmarks Array of bookmark URL strings
    */
-  render(bookmarks) {
+  render($container, bookmarks) {
+    this.$container = $container;
     if(!this.$container) return false;
+
     this.$container.innerHTML = '';
     for(let i = 0; i < bookmarks.length; i++) {
       const $bookmark = this.createBookmarkElement(i, bookmarks[i]);
