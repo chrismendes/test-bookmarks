@@ -28,15 +28,15 @@ export default class Pagination {
 
       let html = `
         <ul class="pagination">
-          <li class="${prevClass}"><a href="#">Prev</a></li>
+          <li class="${prevClass}"><a href="#/prev">Prev</a></li>
       `;
       for(let i = 0; i < totalPages; i++) {
         html += (currentPage === i+1) ? `<li class="is-active">` : `<li>`;
-        html += `<a href="#">${i+1}</a>`;
+        html += `<a href="#/${i+1}">${i+1}</a>`;
         html += `</li>`;
       }
       html += `
-      <li class="${nextClass}"><a href="#">Next</a></li>
+      <li class="${nextClass}"><a href="#/next">Next</a></li>
         </ul>
       `;
       this.$container.innerHTML = html;

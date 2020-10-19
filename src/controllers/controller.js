@@ -18,7 +18,15 @@ export default class Controller {
    * @param {string} appUrl Document location hash (e.g. #/, #/submitted)
    */
   setView(appUrl) {
-    const route = appUrl.replace(/^#\//, '');
+    let route = appUrl.replace(/^#\//, '');
+
+    const pageNumber = parseInt(route);
+    const isPageNumber = (!isNaN(pageNumber));
+    if(isPageNumber) {
+      this.currentBookmarkPage = pageNumber;
+      route = '';
+    }
+
     this.view = this.routes[route];
 
     if(route === '') {
