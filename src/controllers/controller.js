@@ -7,6 +7,9 @@ export default class Controller {
   constructor(routes, storage) {
     this.routes = routes;
     this.storage = storage;
+
+    this.currentBookmarkPage = 1;
+    this.bookmarksPerPage = 2;
   }
 
   /**
@@ -43,7 +46,7 @@ export default class Controller {
   loadIndexPage() {
     const bookmarks = this.storage.fetch();
     const state = { bookmarks: bookmarks };
-    this.view.render(state);
+    this.view.render(state, this.bookmarksPerPage, this.currentBookmarkPage);
 
     this.view.bindDeleteBookmark(this.deleteBookmark.bind(this));
     this.view.bindUpdateBookmark(this.updateBookmark.bind(this));
