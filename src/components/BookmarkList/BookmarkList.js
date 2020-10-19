@@ -2,9 +2,9 @@ import '../Bookmark';
 
 export default class BookmarkList {
 
-  constructor($container) {
-    this.$container = $container;
+  constructor(displayLimit = 10) {
     this.parentHandlers = {};
+    this.displayLimit = displayLimit;
   }
 
   /**
@@ -58,7 +58,6 @@ export default class BookmarkList {
    * Update bookmark IDs kept in data-bookmarkid to reflect sequential order (0, 1, 2, etc)
    */
   reassignBookmarkIDs() {
-console.log(this.$container);
     this.$bookmarks = this.$container.querySelectorAll('.bookmark');
     for(let i = 0; i < this.$bookmarks.length; i++) {
       this.$bookmarks[i].setAttribute('data-bookmarkid', i);
@@ -138,9 +137,11 @@ console.log(this.$container);
   render($container, bookmarks) {
     this.$container = $container;
     if(!this.$container) return false;
-
     this.$container.innerHTML = '';
-    for(let i = 0; i < bookmarks.length; i++) {
+
+    const listLength = (bookmarks.length > this.displayLimit) ? this.displayLimit : bookmarks.length;
+
+    for(let i = 0; i < listLength; i++) {
       const $bookmark = this.createBookmarkElement(i, bookmarks[i]);
       this.$container.appendChild($bookmark);
     }

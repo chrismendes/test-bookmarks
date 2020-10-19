@@ -88,9 +88,11 @@ export default class IndexPage {
       pagination:      document.querySelector('.js-pagination')
     };
 
+    const bookmarksPerPage = 2;
+    
     this.addBookmarkForm = new AddBookmarkForm();
-    this.bookmarkList = new BookmarkList();
-    this.pagination = new Pagination();
+    this.bookmarkList = new BookmarkList(bookmarksPerPage);
+    this.pagination = new Pagination(bookmarksPerPage);
   }
 
   /**
