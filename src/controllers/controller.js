@@ -10,19 +10,6 @@ export default class Controller {
   }
 
   /**
-   * Bind events in view to controller response functions
-   */
-  initIndexPageView() {
-    const bookmarks = this.storage.fetch();
-    const state = { bookmarks: bookmarks };
-    this.view.render(state);
-
-    this.view.bindDeleteBookmark(this.deleteBookmark.bind(this));
-    this.view.bindUpdateBookmark(this.updateBookmark.bind(this));
-    this.view.bindAddBookmark(this.addBookmark.bind(this));
-  }
-
-  /**
    * Initialise view depending on requested route
    * 
    * @param {string} appUrl Document location hash (e.g. #/, #/submitted)
@@ -36,6 +23,19 @@ export default class Controller {
     // if(route === 'submitted') {
 
     // }
+  }
+
+  /**
+   * Bind events in view to controller response functions
+   */
+  initIndexPageView() {
+    const bookmarks = this.storage.fetch();
+    const state = { bookmarks: bookmarks };
+    this.view.render(state);
+
+    this.view.bindDeleteBookmark(this.deleteBookmark.bind(this));
+    this.view.bindUpdateBookmark(this.updateBookmark.bind(this));
+    this.view.bindAddBookmark(this.addBookmark.bind(this));
   }
 
   /**
