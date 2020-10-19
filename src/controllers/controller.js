@@ -17,33 +17,22 @@ export default class Controller {
    * 
    * @param {string} appUrl Document location hash (e.g. #/, #/submitted)
    */
-  loadPage(appUrl) {
+  setView(appUrl) {
     const route = appUrl.replace(/^#\//, '');
     this.view = this.routes[route];
 
     if(route === '') {
-      this.loadIndexPage();
+      this.loadIndexView();
     }
     if(route === 'submitted') {
-      this.loadSubmittedPage();
-    }
-  }
-
-  /**
-   * Trigger page navigation
-   * 
-   * @param {string} page Page name as defined by app routes
-   */
-  changePage(page) {
-    if(page && this.routes[page]) {
-      window.location.href = `#/${page}`;
+      this.loadBookmarkSubmittedView();
     }
   }
 
   /**
    * Bind events in view to controller response functions
    */
-  loadIndexPage() {
+  loadIndexView() {
     const bookmarks = this.storage.fetch();
     const state = { bookmarks: bookmarks };
     this.view.render(state, this.bookmarksPerPage, this.currentBookmarkPage);
@@ -56,7 +45,7 @@ export default class Controller {
   /**
    * Bind events in view to controller response functions
    */
-  loadSubmittedPage() {
+  loadBookmarkSubmittedView() {
     const lastBookmark = this.storage.fetchLast();
     const state = { lastBookmark: lastBookmark };
     this.view.render(state);
@@ -69,7 +58,7 @@ export default class Controller {
    */
   addBookmark(url) {
     this.storage.insert(url);
-    this.changePage('submitted');
+    window.location.href = '#/submitted';
   }
 
   /**
