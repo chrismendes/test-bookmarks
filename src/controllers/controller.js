@@ -4,24 +4,25 @@ export default class Controller {
    * @param {IndexPage|SubmittedPage} view View/Page instance
    * @param {Storage} storage Storage instance
    */
-  constructor(initView, storage) {
-    this.view = initView;
+  constructor(view, storage) {
+    this.view = view;
     this.storage = storage;
 
-    const bookmarks = this.storage.fetch();
-    const state = {
-      bookmarks: bookmarks
-    };
-    this.view.render(state, this.bindUIEvents.bind(this));
+    this.initView();
   }
 
   /**
    * Bind events in view to controller response functions
    */
-  bindUIEvents() {
-    this.view.bindAddBookmark(this.addBookmark.bind(this));
+  initView() {
     this.view.bindDeleteBookmark(this.deleteBookmark.bind(this));
     this.view.bindUpdateBookmark(this.updateBookmark.bind(this));
+
+    const bookmarks = this.storage.fetch();
+    const state = { bookmarks: bookmarks };
+    this.view.render(state);
+
+    this.view.bindAddBookmark(this.addBookmark.bind(this));
   }
 
   /**
@@ -31,7 +32,8 @@ export default class Controller {
    */
   addBookmark(url) {
     this.storage.insert(url);
-    this.view.addBookmarkToDOM(url);
+    const bookmarks = this.storage.fetch();
+    this.view.updateBookmarks(bookmarks);
   }
 
   /**
@@ -41,7 +43,8 @@ export default class Controller {
    */
   deleteBookmark(bookmarkID) {
     this.storage.delete(bookmarkID);
-    this.view.removeBookmarkFromDOM(bookmarkID);
+    const bookmarks = this.storage.fetch();
+    this.view.updateBookmarks(bookmarks);
   }
 
   /**
@@ -52,7 +55,8 @@ export default class Controller {
    */
   updateBookmark(bookmarkID, url) {
     this.storage.update(bookmarkID, url);
-    this.view.updateBookmarkInDOM(bookmarkID, url);
+    const bookmarks = this.storage.fetch();
+    this.view.updateBookmarks(bookmarks);
   }
   
 }

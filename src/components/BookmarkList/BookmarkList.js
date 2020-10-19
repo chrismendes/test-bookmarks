@@ -4,96 +4,7 @@ export default class BookmarkList {
 
   constructor($container) {
     this.$container = $container;
-  }
-
-  /**
-   * Bind handler function to edit button click
-   * 
-   * @param {element} [$bookmark] Owner bookmark of edit button, otherwise bind all edit buttons
-   */
-  bindEditClick($bookmark) {
-    const $editButtons = ($bookmark) ? $bookmark.querySelectorAll('button[data-action=edit]') : this.$editButtons;
-
-    for(const $button of $editButtons) {
-      $button.addEventListener('click', () => {
-        const $bookmark = $button.parentNode.parentNode;
-        if($bookmark) {
-          const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
-          if(bookmarkID) {
-            this.toggleEditMode(bookmarkID);
-          }
-        }
-      });
-    }
-  }
-
-  /**
-   * Bind handler function to cancel button click
-   * 
-   * @param {element} [$bookmark] Owner bookmark of cancel button, otherwise bind all cancel buttons
-   */
-  bindCancelClick($bookmark) {
-    const $cancelButtons = ($bookmark) ? $bookmark.querySelectorAll('button[data-action=cancel]') : this.$cancelButtons;
-
-    for(const $button of $cancelButtons) {
-      $button.addEventListener('click', () => {
-        const $bookmark = $button.parentNode.parentNode;
-        if($bookmark) {
-          const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
-          if(bookmarkID) {
-            this.toggleEditMode(bookmarkID);
-          }
-        }
-      });
-    }
-  }
-
-  /**
-   * Bind handler function to cancel button click
-   */
-  bindDeleteClick($bookmark, handler) {
-    const $targetButtons = ($bookmark) ? $bookmark.querySelectorAll('button[data-action=delete]') : this.$deleteButtons;
-
-    if(!handler) {
-      return false;
-    }
-
-    for(const $button of $targetButtons) {
-      $button.addEventListener('click', () => {
-        const $bookmark = $button.parentNode.parentNode;
-        if($bookmark) {
-          const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
-          if(bookmarkID) {
-            handler(bookmarkID);
-          }
-        }
-      });
-    }
-  }
-
-  /**
-   * Bind handler function to save button click
-   */
-  bindSaveClick($bookmark, handler) {
-    const $targetButtons = ($bookmark) ? $bookmark.querySelectorAll('button[data-action=save]') : this.$saveButtons;
-
-    if(!handler) {
-      return false;
-    }
-
-    for(const $button of $targetButtons) {
-      $button.addEventListener('click', () => {
-        const $bookmark = $button.parentNode.parentNode;
-        const $input = $bookmark.querySelector('.bookmark_editurl');
-        if($bookmark && $input) {
-          const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
-          const url = $input.value;
-          if(bookmarkID && url) {
-            handler(bookmarkID, url);
-          }
-        }
-      });
-    }
+    this.parentHandlers = {};
   }
 
   /**
@@ -112,6 +23,85 @@ export default class BookmarkList {
         $input.select();
       }
     }
+  }
+
+  /**
+   * Update bookmark element in list
+   * 
+   * @param {number} bookmarkID Bookmark ID used to pick bookmark from DOM
+   */
+  updateBookmark(bookmarkID) {
+    const $bookmark = document.querySelector(`.bookmark[data-bookmarkid="${bookmarkID}"`);
+    const newURL = $bookmark.querySelector('.bookmark_editurl').value;
+
+    if($bookmark && newURL) {
+      const $url = $bookmark.querySelector('.bookmark_url');
+      if($url) {
+        $url.textContent = newURL;
+        $url.setAttribute('href', newURL);
+        this.toggleEditMode(bookmarkID);
+        this.parentHandlers['save'](bookmarkID, newURL);
+      }
+    }
+  }
+
+  /**
+   * Dispatch bookmark to parent for deletion
+   * 
+   * @param {number} bookmarkID Bookmark ID used to identify bookmark to delete
+   */
+  deleteBookmark(bookmarkID) {
+    this.parentHandlers['delete'](bookmarkID);
+  }
+
+  /**
+   * Update bookmark IDs kept in data-bookmarkid to reflect sequential order (0, 1, 2, etc)
+   */
+  reassignBookmarkIDs() {
+    this.$bookmarks = this.$container.querySelectorAll('.bookmark');
+    for(let i = 0; i < this.$bookmarks.length; i++) {
+      this.$bookmarks[i].setAttribute('data-bookmarkid', i);
+    }
+  }
+
+  /**
+   * Bind action buttons across all bookmarks with event handlers
+   * 
+   * @param {element} $bookmark Owner bookmark of edit button, otherwise bind all edit buttons
+   */
+  bindActionButtons() {
+    const buttons = ['edit', 'cancel', 'delete', 'save'];
+
+    for(const $bookmark of this.$bookmarks) {
+      for(const button of buttons) {
+
+        const $button = $bookmark.querySelector(`button[data-action=${button}]`);
+        const bookmarkID = $bookmark.getAttribute('data-bookmarkid');
+        let action = null;
+
+        if(button === 'edit' || button === 'cancel') {
+          action = () => this.toggleEditMode(bookmarkID);
+        }
+        if(button === 'delete') {
+          action = () => this.deleteBookmark(bookmarkID);
+        }
+        if(button === 'save') {
+          action = () => this.updateBookmark(bookmarkID);
+        }
+        $button.addEventListener('click', action);
+
+      }
+    }
+  }
+
+  /**
+   * Cache parent-provided functions for handling events
+   * 
+   * @param {string} event String donating user action (e.g. 'save')
+   * @param {function} handler Parent function to call upon event
+   */
+  registerEventHandler(event, handler) {
+    this.parentHandlers[event] = handler;
   }
 
   /**
@@ -146,83 +136,24 @@ export default class BookmarkList {
    */
   render(bookmarks) {
     if(!this.$container) return false;
+    this.$container.innerHTML = '';
     for(let i = 0; i < bookmarks.length; i++) {
       const $bookmark = this.createBookmarkElement(i, bookmarks[i]);
       this.$container.appendChild($bookmark);
     }
-    this.postRender();
+    this.cacheElements();
+    this.bindActionButtons();
   }
 
   /**
-   * Inject new bookmark at top of list
-   * 
-   * @param {string} url Bookmark URL string
+   * Cache DOM elements for future use
    */
-  addBookmark(url, saveHandler, deleteHandler) {
-    const bookmarkID = 0;
-    const $bookmark = this.createBookmarkElement(bookmarkID, url);
-    this.$container.prepend($bookmark);
-
-    this.reassignBookmarkIDs();
-    this.bindEditClick($bookmark);
-    this.bindCancelClick($bookmark);
-    this.bindDeleteClick($bookmark, deleteHandler);
-    this.bindSaveClick($bookmark, saveHandler);
-  }
-
-  /**
-   * Remove bookmark element from list
-   * 
-   * @param {number} bookmarkID Bookmark ID used to pick bookmark from DOM
-   */
-  deleteBookmark(bookmarkID) {
-    const $bookmark = document.querySelector(`.bookmark[data-bookmarkid="${bookmarkID}"`);
-    if($bookmark) {
-      $bookmark.remove();
-      this.reassignBookmarkIDs();
-    }
-  }
-
-  /**
-   * Update bookmark element in list
-   * 
-   * @param {number} bookmarkID Bookmark ID used to pick bookmark from DOM
-   * @param {string} url New bookmark URL
-   */
-  updateBookmark(bookmarkID, url) {
-    const $bookmark = document.querySelector(`.bookmark[data-bookmarkid="${bookmarkID}"`);
-    if($bookmark) {
-      const $url = $bookmark.querySelector('.bookmark_url');
-      if($url) {
-        $url.textContent = url;
-        $url.setAttribute('href', url);
-        this.toggleEditMode(bookmarkID);
-      }
-    }
-  }
-
-  /**
-   * Update bookmark IDs kept in data-bookmarkid to reflect sequential order (0, 1, 2, etc)
-   */
-  reassignBookmarkIDs() {
-    this.$bookmarks = this.$container.querySelectorAll('.bookmark');
-    for(let i = 0; i < this.$bookmarks.length; i++) {
-      this.$bookmarks[i].setAttribute('data-bookmarkid', i);
-    }
-  }
-
-  /**
-   * Post-render duties (e.g. cache DOM elements)
-   */
-  postRender() {
+  cacheElements() {
     this.$bookmarks = this.$container.querySelectorAll('.bookmark');
     this.$editButtons = this.$container.querySelectorAll('button[data-action=edit]');
     this.$cancelButtons = this.$container.querySelectorAll('button[data-action=cancel]');
     this.$deleteButtons = this.$container.querySelectorAll('button[data-action=delete]');
     this.$saveButtons = this.$container.querySelectorAll('button[data-action=save]');
-
-    this.bindEditClick();
-    this.bindCancelClick();
   }
 
 }
