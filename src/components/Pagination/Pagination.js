@@ -11,7 +11,7 @@ export default class Pagination {
   calculatePagesTotal(itemsTotal, perPage) {
     return Math.ceil(itemsTotal/perPage);
   }
-  
+
   /**
    * Generate HTML for pagination
    * 

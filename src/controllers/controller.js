@@ -42,9 +42,14 @@ export default class Controller {
    */
   loadIndexView() {
     const bookmarks = this.storage.fetch();
-    const state = { bookmarks: bookmarks };
-    this.view.render(state, this.bookmarksPerPage, this.currentBookmarkPage);
+    const state = {
+      bookmarks: bookmarks,
+      perPage: this.bookmarksPerPage,
+      currentPage: this.currentBookmarkPage,
+      totalPages: this.calculatePagesTotal(bookmarks.length, this.bookmarksPerPage)
+    };
 
+    this.view.render(state);
     this.view.bindDeleteBookmark(this.deleteBookmark.bind(this));
     this.view.bindUpdateBookmark(this.updateBookmark.bind(this));
     this.view.bindAddBookmark(this.addBookmark.bind(this));
@@ -77,7 +82,12 @@ export default class Controller {
   deleteBookmark(bookmarkID) {
     this.storage.delete(bookmarkID);
     const bookmarks = this.storage.fetch();
-    this.view.updateBookmarks(bookmarks, this.bookmarksPerPage, this.currentBookmarkPage);
+    const totalPages = this.calculatePagesTotal(bookmarks.length, this.bookmarksPerPage);
+    if(this.currentBookmarkPage > totalPages) {
+      window.location.href = `#/${totalPages}`;
+    } else {
+      this.view.updateBookmarks(bookmarks, this.bookmarksPerPage, this.currentBookmarkPage);
+    }
   }
 
   /**
@@ -89,7 +99,17 @@ export default class Controller {
   updateBookmark(bookmarkID, url) {
     this.storage.update(bookmarkID, url);
     const bookmarks = this.storage.fetch();
-    this.view.updateBookmarks(bookmarks);
+    this.view.updateBookmarks(bookmarks, this.bookmarksPerPage, this.currentBookmarkPage);
+  }
+
+  /**
+   * Calculate number of pages based on given requirements
+   * 
+   * @param {number} itemsTotal Total number of items to paginate
+   * @param {number} perPage Number of items per page
+   */
+  calculatePagesTotal(itemsTotal, perPage) {
+    return Math.ceil(itemsTotal/perPage);
   }
   
 }
