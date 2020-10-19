@@ -19,17 +19,17 @@ export default class Controller {
     this.view = this.routes[route];
 
     if(route === '') {
-      this.initIndexPageView();
+      this.loadIndexPage();
     }
     if(route === 'submitted') {
-      this.initSubittedPageView();
+      this.loadSubmittedPage();
     }
   }
 
   /**
    * Bind events in view to controller response functions
    */
-  initIndexPageView() {
+  loadIndexPage() {
     const bookmarks = this.storage.fetch();
     const state = { bookmarks: bookmarks };
     this.view.render(state);
@@ -42,7 +42,7 @@ export default class Controller {
   /**
    * Bind events in view to controller response functions
    */
-  initSubittedPageView() {
+  loadSubmittedPage() {
     const lastBookmark = this.storage.fetchLast();
     const state = { lastBookmark: lastBookmark };
     this.view.render(state);
