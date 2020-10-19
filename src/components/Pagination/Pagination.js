@@ -23,12 +23,14 @@ export default class Pagination {
 
     if(this.$container) {
       const totalPages = this.calculatePagesTotal(itemsTotal, itemsPerPage);
-      const prevClass = (currentPage > totalPages && itemsTotal > 0) ? '' : 'is-disabled';
+      const prevClass = (currentPage > 1 && itemsTotal > 0) ? '' : 'is-disabled';
       const nextClass = (currentPage < totalPages && itemsTotal > 0) ? '' : 'is-disabled';
+      const prevLink = (currentPage > 1) ? currentPage-1 : 1;
+      const nextLink = (currentPage < totalPages) ? currentPage+1 : totalPages;
 
       let html = `
         <ul class="pagination">
-          <li class="${prevClass}"><a href="#/prev">Prev</a></li>
+          <li class="${prevClass}"><a href="#/${prevLink}">Prev</a></li>
       `;
       for(let i = 0; i < totalPages; i++) {
         html += (currentPage === i+1) ? `<li class="is-active">` : `<li>`;
@@ -36,7 +38,7 @@ export default class Pagination {
         html += `</li>`;
       }
       html += `
-      <li class="${nextClass}"><a href="#/next">Next</a></li>
+      <li class="${nextClass}"><a href="#/${nextLink}">Next</a></li>
         </ul>
       `;
       this.$container.innerHTML = html;
