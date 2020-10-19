@@ -101,8 +101,10 @@ export default class IndexPage {
    * 
    * @param {array} bookmarks Array of bookmark URL strings
    */
-  updateBookmarks(bookmarks) {
-    this.bookmarkList.render(this.$containers.bookmarkList, bookmarks);
+  updateBookmarks(bookmarks, bookmarksPerPage, currentPage = 1) {
+    const offset = ((currentPage-1) * bookmarksPerPage);
+    this.bookmarkList.render(this.$containers.bookmarkList, bookmarks, offset, bookmarksPerPage);
+    this.pagination.render(this.$containers.pagination, bookmarks.length, currentPage, bookmarksPerPage);
   }
   
 }

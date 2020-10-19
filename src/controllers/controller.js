@@ -77,7 +77,7 @@ export default class Controller {
   deleteBookmark(bookmarkID) {
     this.storage.delete(bookmarkID);
     const bookmarks = this.storage.fetch();
-    this.view.updateBookmarks(bookmarks);
+    this.view.updateBookmarks(bookmarks, this.bookmarksPerPage, this.currentBookmarkPage);
   }
 
   /**
