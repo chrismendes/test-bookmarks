@@ -9,7 +9,7 @@ export default class Controller {
     this.storage = storage;
 
     this.currentBookmarkPage = 1;
-    this.bookmarksPerPage = 2;
+    this.bookmarksPerPage = 20;
   }
 
   /**
