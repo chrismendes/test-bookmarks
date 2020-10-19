@@ -43,12 +43,16 @@ export default class IndexPage {
    * @param {object} data Data to pass to template HTML and render
    * @param {function} bindEvents Event binding function to call when elements rendered
    */
-  render(data) {
+  render(data, currentPage = 1) {
     if(data.bookmarks) {
       this.renderComponentContainers();
       this.initComponents();
-      this.bookmarkList.render(this.$containers.bookmarkList, data.bookmarks);
-      this.pagination.render(this.$containers.pagination, data.bookmarks.length);
+
+      const bookmarksPerPage = 5;
+      const offset = ((currentPage-1) * bookmarksPerPage);
+
+      this.bookmarkList.render(this.$containers.bookmarkList, data.bookmarks, offset, bookmarksPerPage);
+      this.pagination.render(this.$containers.pagination, data.bookmarks.length, currentPage, bookmarksPerPage);
       this.addBookmarkForm.render(this.$containers.addBookmarkForm);
     }
   }
@@ -87,12 +91,10 @@ export default class IndexPage {
       bookmarkList:    document.querySelector('.js-bookmarks'),
       pagination:      document.querySelector('.js-pagination')
     };
-
-    const bookmarksPerPage = 2;
     
     this.addBookmarkForm = new AddBookmarkForm();
-    this.bookmarkList = new BookmarkList(bookmarksPerPage);
-    this.pagination = new Pagination(bookmarksPerPage);
+    this.bookmarkList = new BookmarkList();
+    this.pagination = new Pagination();
   }
 
   /**

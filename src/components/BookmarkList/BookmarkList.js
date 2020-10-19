@@ -2,9 +2,8 @@ import '../Bookmark';
 
 export default class BookmarkList {
 
-  constructor(displayLimit = 10) {
+  constructor() {
     this.parentHandlers = {};
-    this.displayLimit = displayLimit;
   }
 
   /**
@@ -134,14 +133,14 @@ export default class BookmarkList {
    * 
    * @param {array} bookmarks Array of bookmark URL strings
    */
-  render($container, bookmarks) {
+  render($container, bookmarks, offset = 0, limit = 10) {
     this.$container = $container;
     if(!this.$container) return false;
     this.$container.innerHTML = '';
 
-    const listLength = (bookmarks.length > this.displayLimit) ? this.displayLimit : bookmarks.length;
+    const listSize = (bookmarks.length > limit) ? limit : bookmarks.length;
 
-    for(let i = 0; i < listLength; i++) {
+    for(let i = offset; i < listSize; i++) {
       const $bookmark = this.createBookmarkElement(i, bookmarks[i]);
       this.$container.appendChild($bookmark);
     }

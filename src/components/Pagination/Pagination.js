@@ -3,13 +3,6 @@ import './Pagination.scss';
 export default class Pagination {
 
   /**
-   * @param {number} itemsPerPage Number of items per page
-   */
-  constructor(itemsPerPage = 10) {
-    this.itemsPerPage = itemsPerPage;
-  }
-
-  /**
    * Calculate number of pages based on given requirements
    * 
    * @param {number} itemsTotal Total number of items to paginate
@@ -25,11 +18,11 @@ export default class Pagination {
    * @param {number} itemsTotal Total number of items to paginate
    * @param {number} currentPage Current active page
    */
-  render($container, itemsTotal, currentPage = 1) {
+  render($container, itemsTotal, currentPage = 1, itemsPerPage = 10) {
     this.$container = $container;
-
+console.log(itemsPerPage);
     if(this.$container) {
-      const totalPages = this.calculatePagesTotal(itemsTotal, this.itemsPerPage);
+      const totalPages = this.calculatePagesTotal(itemsTotal, itemsPerPage);
       const prevClass = (currentPage > totalPages && itemsTotal > 0) ? '' : 'is-disabled';
       const nextClass = (currentPage < totalPages && itemsTotal > 0) ? '' : 'is-disabled';
 
