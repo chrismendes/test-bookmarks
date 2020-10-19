@@ -2,9 +2,7 @@
 
   > A sample application allowing the user to add/edit/delete bookmark URLs. Implemented with "vanilla" JavaScript (ES6) (no libraries or frameworks)
 
-  > Run the app at: https://app-bookmarks.chrismendes.uk (may show insecure SSL certificate while new)
-
-  > Or: https://bookmark-manager-bac58.web.app (https/SSL secure)
+  > Run the app at: https://app-bookmarks.chrismendes.uk
 
 ## Overview
 
