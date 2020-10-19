@@ -2,7 +2,7 @@ import '../Bookmark';
 import '../Memo/Memo.scss';
 
 export default class BookmarkList {
-
+  
   constructor() {
     this.parentHandlers = {};
   }
@@ -66,10 +66,8 @@ export default class BookmarkList {
 
   /**
    * Bind action buttons across all bookmarks with event handlers
-   * 
-   * @param {element} $bookmark Owner bookmark of edit button, otherwise bind all edit buttons
    */
-  bindActionButtons() {
+  bindActions() {
     const buttons = ['edit', 'cancel', 'delete', 'save'];
 
     for(const $bookmark of this.$bookmarks) {
@@ -91,7 +89,23 @@ export default class BookmarkList {
         $button.addEventListener('click', action);
 
       }
+      this.bindEnterKey($bookmark);
     }
+  }
+
+  /**
+   * Bind enter key to trigger save button click and update bookmark
+   * @param {element} $bookmark Owner bookmark of edit button, otherwise bind all edit buttons
+   */
+  bindEnterKey($bookmark) {
+    const $input = $bookmark.querySelector(`input[type=text]`);
+    const $saveButton = $bookmark.querySelector(`button[data-action=save]`);
+    const action = (e) => {
+      if(e.keyCode === 13) { // (enter key)
+        $saveButton.click();
+      }
+    };
+    $input.addEventListener('keyup', action);
   }
 
   /**
@@ -164,7 +178,7 @@ export default class BookmarkList {
         this.$container.appendChild($bookmark);
       }
       this.cacheElements();
-      this.bindActionButtons();
+      this.bindActions();
 
     } else {
       const $emptyMessage = this.createEmptyListMessage();
