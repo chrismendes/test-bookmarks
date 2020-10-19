@@ -38,7 +38,7 @@ export default class Pagination {
         html += `</li>`;
       }
       html += `
-      <li class="${nextClass}"><a href="#/${nextLink}">Next</a></li>
+          <li class="${nextClass}"><a href="#/${nextLink}">Next</a></li>
         </ul>
       `;
       this.$container.innerHTML = html;
