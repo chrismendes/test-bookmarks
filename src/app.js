@@ -12,10 +12,18 @@ import './components/Pagination/Pagination.scss'
 import Controller from './controllers/controller';
 import Storage from './services/storage';
 import IndexPage from './pages/index.js'
+import SubmittedPage from './pages/submitted.js'
 
 const storage = new Storage('bookmark-manager');
 const indexPage = new IndexPage();
-const controller = new Controller(indexPage, storage);
+const submittedPage = new SubmittedPage();
+
+const routes = {
+  '': indexPage,
+  'submitted': submittedPage
+};
+
+const controller = new Controller(routes, storage);
 
 window.addEventListener('load', () => controller.setView(document.location.hash));
 window.addEventListener('hashchange', () => controller.setView(document.location.hash));

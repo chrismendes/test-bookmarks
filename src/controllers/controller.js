@@ -4,8 +4,8 @@ export default class Controller {
    * @param {IndexPage|SubmittedPage} view View/Page instance
    * @param {Storage} storage Storage instance
    */
-  constructor(view, storage) {
-    this.view = view;
+  constructor(routes, storage) {
+    this.routes = routes;
     this.storage = storage;
   }
 
@@ -16,13 +16,14 @@ export default class Controller {
    */
   setView(appUrl) {
     const route = appUrl.replace(/^#\//, '');
+    this.view = this.routes[route];
 
     if(route === '') {
       this.initIndexPageView();
     }
-    // if(route === 'submitted') {
-
-    // }
+    if(route === 'submitted') {
+      this.initSubittedPageView();
+    }
   }
 
   /**
@@ -36,6 +37,15 @@ export default class Controller {
     this.view.bindDeleteBookmark(this.deleteBookmark.bind(this));
     this.view.bindUpdateBookmark(this.updateBookmark.bind(this));
     this.view.bindAddBookmark(this.addBookmark.bind(this));
+  }
+
+  /**
+   * Bind events in view to controller response functions
+   */
+  initSubittedPageView() {
+    const lastBookmark = this.storage.fetchLast();
+    const state = { lastBookmark: lastBookmark };
+    this.view.render(state);
   }
 
   /**
