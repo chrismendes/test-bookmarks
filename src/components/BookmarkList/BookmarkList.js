@@ -1,6 +1,6 @@
 import '../Bookmark';
 import '../Memo/Memo.scss';
-import { validateURL, urlWithoutProtocol, urlWithProtocol } from '../../helpers/url';
+import { validateURL, urlWithoutProtocol } from '../../helpers/url';
 
 export default class BookmarkList {
   
@@ -160,7 +160,7 @@ export default class BookmarkList {
     const div = document.createElement('div');
     const html = `
       <div class="bookmark" data-bookmarkid="${id}">
-        <a class="bookmark_url" href="${urlWithProtocol(url)}" target="_blank">${urlWithoutProtocol(url)}</a>
+        <a class="bookmark_url" href="${url}" target="_blank">${urlWithoutProtocol(url)}</a>
         <input class="bookmark_editurl" type="text" value="${url}" />
         <span class="bookmark_error">Please specify a valid URL</span>
         <div class="bookmark_buttons">
