@@ -1,7 +1,7 @@
 {
-  "name": "test-phantom",
+  "name": "bookmark-manager",
   "version": "1.0.0",
-  "description": "Code test for developer role at Phantom",
+  "description": "Sample application in vanilla JavaScript",
   "main": "/src/app.js",
   "scripts": {
     "start": "parcel index.html",
