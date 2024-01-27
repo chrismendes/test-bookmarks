@@ -1,4 +1,4 @@
-# Sample Application - Bookmark Manager
+# Interview Test - Bookmark Manager
 
   > A sample application allowing the user to add/edit/delete bookmark URLs. Implemented with "vanilla" JavaScript (ES6) (no libraries or frameworks)
 
